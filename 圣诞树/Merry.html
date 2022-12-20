@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>雪花</title>
+    <meta name="viewport" content="width=device-width,hight=device-hight,minimum-scale=1.0,maximum-scale=1.0,ser-scalable=none" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* background-color: rgb(54, 66, 70); */
+        }
+        
+        .tree {
+            position: relative;
+            width: 500px;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            /* border: 2px solid red; */
+            margin-top: 200px;
+        }
+        
+        .star {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: gold;
+            z-index: 999;
+            margin-bottom: 40px;
+            clip-path: polygon(50% 0%, 70% 30%, 100% 40%, 80% 66%, 80% 100%, 50% 80%, 20% 100%, 20% 66%, 0% 40%, 30% 30%);
+        }
+        
+        .chunk {
+            width: 30px;
+            height: 600px;
+            background-color: rgb(63, 60, 60);
+            z-index: 20;
+            position: relative;
+            top: 30px;
+        }
+        
+        .tree li {
+            position: absolute;
+            top: 25px;
+            width: 4px;
+            background: linear-gradient(rgba(46, 204, 113, 0), rgba(46, 203, 113, 0.25));
+            transform-origin: 50% 0;
+            animation: swing 4s calc(var(--i) * -17.13s) ease-in-out infinite;
+            /* animation: swing 4s calc(var(--i) * -0.23s) ease-in-out infinite; */
+            height: calc(var(--i) * 4px);
+        }
+        
+        li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 20px;
+            background-color: #fff;
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            left: 50%;
+        }
+        
+        li:nth-child(4n)::before {
+            background-color: red;
+            box-shadow: 0 0 10px 2px red;
+        }
+        
+        li:nth-child(4n + 1)::before {
+            background-color: blue;
+            box-shadow: 0 0 10px 2px blue;
+        }
+        
+        li:nth-child(4n + 2)::before {
+            background-color: orange;
+            box-shadow: 0 0 10px 2px orange;
+        }
+        
+        li:nth-child(4n + 3)::before {
+            background-color: cyan;
+            box-shadow: 0 0 10px 2px cyan;
+        }
+        
+        @keyframes swing {
+            0%,
+            100% {
+                transform: rotate(-30deg);
+            }
+            5%,
+            45% {
+                opacity: 0.185;
+                z-index: 0;
+            }
+            0%,
+            50%,
+            100% {
+                opacity: 1;
+                z-index: 99;
+            }
+            50% {
+                transform: rotate(30deg);
+            }
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+    <script src="jq.snow.js"></script>
+    <script src="./bundle.js"></script>
+    <!--下面是调用方法和参数说明-->
+    <script>
+        $(function() {
+            $.fn.snow({
+                minSize: 5, //雪花的最小尺寸
+                maxSize: 40, //雪花的最大尺寸
+                newOn: 80 //雪花出现的频率 这个数值越小雪花越多
+            });
+        });
+    </script>
+</head>
+
+<body style="background:rgb(54, 66, 70) url(bg1.jpg) no-repeat center; height:750px;overflow-x:hidden;">
+    <ul class="tree">
+        <div class="star"></div>
+        <div class="chunk"></div>
+    </ul>
+</body>
+<script>
+    let tree = document.querySelector(".tree");
+    for (let i = 0; i < 129; i++) {
+        let li = document.createElement("li");
+
+        // li.style = '--i:' + i;
+        // li.style += '--h:' + Math.floor(i / 4) * 4;
+        li.style = `--i:${i}`;
+        tree.appendChild(li);
+    }
+</script>
+
+</html>
